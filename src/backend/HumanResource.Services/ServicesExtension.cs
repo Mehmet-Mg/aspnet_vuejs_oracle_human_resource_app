@@ -9,6 +9,9 @@ public static class ServicesExtension
     {
         services.AddScoped<IEmployeeService, EmployeeManager>();
         services.AddScoped<IDepartmentService, DepartmentManager>();
+        services.AddScoped<IJobService, JobManager>();
+        services.AddScoped<ILocationService, LocationManager>();
+        services.AddScoped<IRegionService, RegionManager>();
         services.AddScoped<IServiceManager, ServiceManager>();
         return services;
     }

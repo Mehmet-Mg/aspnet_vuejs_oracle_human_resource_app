@@ -23,7 +23,7 @@ public class DepartmentManager : IDepartmentService
         return _unitOfWork.DepartmentRepository.All();
     }
 
-    public Department GetById(int id)
+    public Department GetById(object id)
     {
         return _unitOfWork.DepartmentRepository.GetById(id);
     }

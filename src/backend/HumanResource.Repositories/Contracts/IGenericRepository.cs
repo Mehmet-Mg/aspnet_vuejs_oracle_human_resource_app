@@ -3,7 +3,7 @@
 public interface IGenericRepository<TEntity> where TEntity : class
 {
     IEnumerable<TEntity> All();
-    TEntity GetById(int id);
+    TEntity GetById(object id);
     void Insert(TEntity entity);
     void Delete(int id);
     void Update(TEntity entity);

@@ -10,6 +10,10 @@ public static class ServicesExtension
     {
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+        services.AddScoped<IJobRepository, JobRepository>();
+        services.AddScoped<IJobHistoryRepository, JobHistoryRepository>();
+        services.AddScoped<ILocationRepository, LocationRepository>();
+        services.AddScoped<IRegionRepository, RegionRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         return services;
     }

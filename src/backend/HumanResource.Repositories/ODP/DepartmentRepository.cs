@@ -7,7 +7,7 @@ namespace HumanResource.Repositories.ODP;
 
 public class DepartmentRepository : IDepartmentRepository
 {
-    private readonly string _connectionString;
+    private readonly string? _connectionString;
 
     public DepartmentRepository(IConfiguration configuration)
     {
@@ -46,7 +46,7 @@ public class DepartmentRepository : IDepartmentRepository
         }
     }
 
-    public Department GetById(int departmentId)
+    public Department GetById(object departmentId)
     {
         using (OracleConnection con = new OracleConnection(_connectionString))
         {

@@ -2,6 +2,6 @@
 
 namespace HumanResource.Services.Contracts;
 
-public interface IDepartmentService : IGenericServie<Department>
+public interface IDepartmentService : IGenericService<Department>
 {
 }

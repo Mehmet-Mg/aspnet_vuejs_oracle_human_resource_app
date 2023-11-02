@@ -1,13 +1,17 @@
 ﻿using HumanResource.Entities.Models;
 using HumanResource.Repositories.Contracts;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
+using System.Data;
+using System.Data.Common;
+using System.Reflection;
 
 namespace HumanResource.Repositories.ODP;
 
 public class EmployeeRepository : IEmployeeRepository
 {
-    private readonly string _connectionString;
+    private readonly string? _connectionString;
 
     public EmployeeRepository(IConfiguration configuration)
     {
@@ -46,7 +50,7 @@ public class EmployeeRepository : IEmployeeRepository
         }
     }
 
-    public Employee GetById(int employeeId)
+    public Employee GetById(object employeeId)
     {
         using (OracleConnection con = new OracleConnection(_connectionString))
         {
@@ -79,23 +83,7 @@ public class EmployeeRepository : IEmployeeRepository
                     Employee employee = null;
                     while (reader.Read())
                     {
-                        if (employee is null)
-                        {
-                            employee = new Employee
-                            {
-                                EmployeeId = reader.GetInt32(0),
-                                FirstName = reader.GetString(1),
-                                LastName = reader.GetString(2),
-                                Email = reader.GetString(3),
-                                PhoneNumber = reader.IsDBNull(4) ? null : reader.GetString(4),
-                                HireDate = reader.GetDateTime(5),
-                                JobId = reader.GetString(6),
-                                Salary = reader.IsDBNull(7) ? null : reader.GetDecimal(7),
-                                CommissionPct = reader.IsDBNull(8) ? null : reader.GetDecimal(8),
-                                ManagerId = reader.IsDBNull(9) ? null : reader.GetInt32(9),
-                                DepartmentId = reader.IsDBNull(10) ? null : reader.GetInt32(10),
-                            };
-                        }
+                        employee = ConvertToEmployee(reader);
                     }
 
                     reader.Dispose();
@@ -135,27 +123,11 @@ public class EmployeeRepository : IEmployeeRepository
                                             department_id 
                                         FROM employees";
 
-                    //cmd.BindByName = true;
-                    //OracleParameter id = new OracleParameter("id", 50);
-
                     OracleDataReader reader = cmd.ExecuteReader();
                     List<Employee> employees = new List<Employee>();
                     while (reader.Read())
                     {
-                        employees.Add(new Employee
-                        {
-                            EmployeeId = reader.GetInt32(0),
-                            FirstName = reader.GetString(1),
-                            LastName = reader.GetString(2),
-                            Email = reader.GetString(3),
-                            PhoneNumber = reader.IsDBNull(4) ? null : reader.GetString(4),
-                            HireDate = reader.GetDateTime(5),
-                            JobId = reader.GetString(6),
-                            Salary = reader.IsDBNull(7) ? null : reader.GetDecimal(7),
-                            CommissionPct = reader.IsDBNull(8) ? null : reader.GetDecimal(8),
-                            ManagerId = reader.IsDBNull(9) ? null : reader.GetInt32(9),
-                            DepartmentId = reader.IsDBNull(10) ? null : reader.GetInt32(10),
-                        });
+                        employees.Add(ConvertToEmployee(reader));
                     }
 
                     reader.Dispose();
@@ -359,5 +331,23 @@ public class EmployeeRepository : IEmployeeRepository
                 }
             }
         }
+    }
+
+    public static Employee ConvertToEmployee(OracleDataReader reader)
+    {
+        return new Employee
+        {
+            EmployeeId = reader.GetInt32(0),
+            FirstName = reader.GetString(1),
+            LastName = reader.GetString(2),
+            Email = reader.GetString(3),
+            PhoneNumber = reader.IsDBNull(4) ? null : reader.GetString(4),
+            HireDate = reader.GetDateTime(5),
+            JobId = reader.GetString(6),
+            Salary = reader.IsDBNull(7) ? null : reader.GetDecimal(7),
+            CommissionPct = reader.IsDBNull(8) ? null : reader.GetDecimal(8),
+            ManagerId = reader.IsDBNull(9) ? null : reader.GetInt32(9),
+            DepartmentId = reader.IsDBNull(10) ? null : reader.GetInt32(10),
+        };
     }
 }

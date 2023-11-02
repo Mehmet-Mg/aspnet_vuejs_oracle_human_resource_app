@@ -2,7 +2,6 @@
 
 namespace HumanResource.Services.Contracts;
 
-public interface IEmployeeService : IGenericService<Employee>
+public interface IRegionService : IGenericService<Region>
 {
-
 }

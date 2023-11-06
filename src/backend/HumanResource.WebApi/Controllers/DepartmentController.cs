@@ -6,7 +6,7 @@ namespace HumanResource.API.Controllers;
 
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class DepartmentController : Controller
 {
     private readonly IServiceManager _serviceManager;

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HumanResource.API.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class RegionController : ControllerBase
 {
     private readonly IServiceManager _serviceManager;

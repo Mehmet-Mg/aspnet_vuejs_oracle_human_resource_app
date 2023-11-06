@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HumanResource.API.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class JobController : ControllerBase
 {
     private readonly IServiceManager _serviceManager;

@@ -1,10 +1,10 @@
 ﻿namespace HumanResource.Services.Contracts;
 
-public interface IGenericService<T> where T : class
+public interface IGenericService<TEntity> where TEntity : class
 {
-    IEnumerable<T> GetAll();
-    T GetById(object id);
-    void Insert(T entity);
+    IEnumerable<TEntity> GetAll();
+    TEntity GetById<T>(T id);
+    void Insert(TEntity entity);
     void Delete(int id);
-    void Update(T entity);
+    void Update(TEntity entity);
 }

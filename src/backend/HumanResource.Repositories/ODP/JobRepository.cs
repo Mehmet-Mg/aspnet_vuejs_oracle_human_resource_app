@@ -91,7 +91,7 @@ public class JobRepository : IJobRepository
         }
     }
 
-    public Job GetById(object id)
+    public Job GetById<T>(T id)
     {
         using (OracleConnection con = new OracleConnection(_connectionString))
         {

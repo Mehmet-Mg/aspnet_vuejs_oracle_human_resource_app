@@ -1,16 +1,41 @@
 <script setup lang="ts">
-import DemoGrid from '../components/Grid.vue'
+import DataGrid from '@/components/DataGrid.vue';
 import { ref, watchEffect } from 'vue'
 
 const searchQuery = ref('')
-const gridColumns = [
-    "locationId",
-    "streetAddress",
-    "postalCode",
-    "city",
-    "stateProvince",
-    "countryId"
+
+const columns = [
+    {
+        name: 'Location Id',
+        dataIndex: 'locationId',
+        key: 'locationId',
+    },
+    {
+        title: 'Street Address',
+        dataIndex: 'streetAddress',
+        key: 'streetAddress',
+    },
+    {
+        title: 'Postal Code',
+        dataIndex: 'postalCode',
+        key: 'postalCode',
+    },
+    {
+        title: 'State Province',
+        key: 'stateProvince',
+        dataIndex: 'stateProvince',
+    },
+    {
+        title: 'Country Id',
+        key: 'countryId',
+        dataIndex: 'countryId',
+    },
+    {
+        title: 'Action',
+        key: 'action',
+    },
 ];
+
 const gridData = ref([]);
 
 watchEffect(async () => {
@@ -24,9 +49,8 @@ watchEffect(async () => {
 	<form id="search">
 		Search <input name="query" v-model="searchQuery">
 	</form>
-	<DemoGrid 
+	<DataGrid
 		:data="gridData"
-		:columns="gridColumns"
-		:filter-key="searchQuery"
+		:columns="columns"
 	/>
 </template>

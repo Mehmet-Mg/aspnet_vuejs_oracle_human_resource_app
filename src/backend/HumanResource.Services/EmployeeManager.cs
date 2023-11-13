@@ -23,7 +23,7 @@ public class EmployeeManager : IEmployeeService
         return _unitOfWork.EmployeeRepository.All();
     }
 
-    public Employee GetById(object id)
+    public Employee GetById<T>(T id)
     {
         return _unitOfWork.EmployeeRepository.GetById(id);
     }

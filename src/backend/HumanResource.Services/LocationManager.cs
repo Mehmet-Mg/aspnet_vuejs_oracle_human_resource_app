@@ -23,7 +23,7 @@ public class LocationManager : ILocationService
         return _unitOfWork.LocationRepository.All();
     }
 
-    public Location GetById(object id)
+    public Location GetById<T>(T id)
     {
         return _unitOfWork.LocationRepository.GetById(id);
     }

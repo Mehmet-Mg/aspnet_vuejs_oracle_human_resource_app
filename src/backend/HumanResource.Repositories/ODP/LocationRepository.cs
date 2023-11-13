@@ -49,7 +49,7 @@ public class LocationRepository : ILocationRepository
         throw new NotImplementedException();
     }
 
-    public Location GetById(object id)
+    public Location GetById<T>(T id)
     {
         using (OracleConnection con = new OracleConnection(_connectionString))
         {

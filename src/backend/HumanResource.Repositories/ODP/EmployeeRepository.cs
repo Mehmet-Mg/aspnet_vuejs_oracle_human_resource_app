@@ -1,11 +1,8 @@
 ﻿using HumanResource.Entities.Models;
 using HumanResource.Repositories.Contracts;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System.Data;
-using System.Data.Common;
-using System.Reflection;
 
 namespace HumanResource.Repositories.ODP;
 
@@ -29,8 +26,9 @@ public class EmployeeRepository : IEmployeeRepository
                     con.Open();
                     cmd.BindByName = true;
 
-                    cmd.CommandText = @"DELETE FROM EMPLOYEES e 
-                                            WHERE e.EMPLOYEE_ID  = :employee_id";
+                    cmd.CommandText = @"DELETE FROM EMPLOYEES E
+                                        WHERE
+                                            E.EMPLOYEE_ID = :EMPLOYEE_ID";
 
                     OracleParameter employeeIdParam = new OracleParameter("employee_id", OracleDbType.Int32);
                     employeeIdParam.Direction = System.Data.ParameterDirection.Input;
@@ -50,7 +48,7 @@ public class EmployeeRepository : IEmployeeRepository
         }
     }
 
-    public Employee GetById(object employeeId)
+    public Employee GetById<T>(T employeeId)
     {
         using (OracleConnection con = new OracleConnection(_connectionString))
         {
@@ -252,18 +250,20 @@ public class EmployeeRepository : IEmployeeRepository
                     con.Open();
                     cmd.BindByName = true;
 
-                    cmd.CommandText = @"UPDATE EMPLOYEES e 
-	                                        SET e.FIRST_NAME = :first_name,
-	                                        e.LAST_NAME = :last_name,
-	                                        e.EMAIL = :email,
-	                                        e.PHONE_NUMBER = :phone_number,
-	                                        e.HIRE_DATE = :hire_date ,
-	                                        e.JOB_ID = :job_id,
-	                                        e.SALARY = :salary,
-	                                        e.COMMISSION_PCT = :commission_pct,
-	                                        e.MANAGER_ID = :manager_id,
-	                                        e.DEPARTMENT_ID = :department_id
-	                                        WHERE e.EMPLOYEE_ID  = :employee_id";
+                    cmd.CommandText = @"UPDATE EMPLOYEES E
+                                        SET
+                                            E.FIRST_NAME = :FIRST_NAME,
+                                            E.LAST_NAME = :LAST_NAME,
+                                            E.EMAIL = :EMAIL,
+                                            E.PHONE_NUMBER = :PHONE_NUMBER,
+                                            E.HIRE_DATE = :HIRE_DATE,
+                                            E.JOB_ID = :JOB_ID,
+                                            E.SALARY = :SALARY,
+                                            E.COMMISSION_PCT = :COMMISSION_PCT,
+                                            E.MANAGER_ID = :MANAGER_ID,
+                                            E.DEPARTMENT_ID = :DEPARTMENT_ID
+                                        WHERE
+                                            E.EMPLOYEE_ID = :EMPLOYEE_ID";
 
                     OracleParameter employeeIdParam = new OracleParameter("employee_id", OracleDbType.Int32);
                     employeeIdParam.Direction = System.Data.ParameterDirection.Input;
@@ -305,7 +305,7 @@ public class EmployeeRepository : IEmployeeRepository
                     salaryParam.Value = employee.Salary;
                     cmd.Parameters.Add(salaryParam);
 
-                    OracleParameter commissionPctParam = new OracleParameter("commission_pct", OracleDbType.Decimal);
+                    OracleParameter commissionPctParam = new OracleParameter("commission_pct", OracleDbType.Decimal, ParameterDirection.Input);
                     commissionPctParam.Direction = System.Data.ParameterDirection.Input;
                     commissionPctParam.Value = employee.CommissionPct;
                     cmd.Parameters.Add(commissionPctParam);

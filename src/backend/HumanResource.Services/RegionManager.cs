@@ -23,7 +23,7 @@ public class RegionManager : IRegionService
         return _unitOfWork.RegionRepository.All();
     }
 
-    public Region GetById(object id)
+    public Region GetById<T>(T id)
     {
         return _unitOfWork.RegionRepository.GetById(id);
     }

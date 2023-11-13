@@ -46,7 +46,7 @@ public class DepartmentRepository : IDepartmentRepository
         }
     }
 
-    public Department GetById(object departmentId)
+    public Department GetById<T>(T departmentId)
     {
         using (OracleConnection con = new OracleConnection(_connectionString))
         {

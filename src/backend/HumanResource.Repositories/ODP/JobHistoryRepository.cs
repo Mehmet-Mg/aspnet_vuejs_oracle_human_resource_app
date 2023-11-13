@@ -23,7 +23,7 @@ public class JobHistoryRepository : IJobHistoryRepository
         throw new NotImplementedException();
     }
 
-    public Job GetById(object id)
+    public Job GetById<T>(T id)
     {
         throw new NotImplementedException();
     }

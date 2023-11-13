@@ -1,19 +1,40 @@
 <script setup lang="ts">
-import DemoGrid from '../components/Grid.vue'
+import DataGrid from '@/components/DataGrid.vue';
+import { useJobs } from '@/store/useJobs';
 import { ref, watchEffect } from 'vue'
 
 const searchQuery = ref('')
-const gridColumns = [
-    "jobId",
-    "jobTitle",
-    "minSalary",
-    "maxSalary"
+const columns = [
+    {
+        name: 'Job Id',
+        dataIndex: 'jobId',
+        key: 'jobId',
+    },
+    {
+        title: 'Job Title',
+        dataIndex: 'jobTitle',
+        key: 'jobTitle',
+    },
+    {
+        title: 'Min Salary',
+        dataIndex: 'minSalary',
+        key: 'minSalary',
+    },
+    {
+        title: 'Max Salary',
+        key: 'maxSalary',
+        dataIndex: 'maxSalary',
+    },
+    {
+        title: 'Action',
+        key: 'action',
+    },
 ];
-const gridData = ref([]);
+
+const store = useJobs()
 
 watchEffect(async () => {
-    const url = `/api/job`
-    gridData.value = await (await fetch(url)).json()
+    await store.getJobs()
 })
 
 </script>
@@ -22,9 +43,5 @@ watchEffect(async () => {
 	<form id="search">
 		Search <input name="query" v-model="searchQuery">
 	</form>
-	<DemoGrid 
-		:data="gridData"
-		:columns="gridColumns"
-		:filter-key="searchQuery"
-	/>
+	<DataGrid :columns="columns" :data="store.jobs" />
 </template>

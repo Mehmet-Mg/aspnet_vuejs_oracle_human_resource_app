@@ -54,7 +54,7 @@ public class RegionRepository : IRegionRepository
         throw new NotImplementedException();
     }
 
-    public Region GetById(object regionId)
+    public Region GetById<T>(T regionId)
     {
         using (OracleConnection con = new OracleConnection(_connectionString))
         {

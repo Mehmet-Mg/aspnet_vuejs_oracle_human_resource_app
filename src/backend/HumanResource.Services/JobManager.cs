@@ -23,7 +23,7 @@ public class JobManager : IJobService
         return _unitOfWork.JobRepository.All();
     }
 
-    public Job GetById(object id)
+    public Job GetById<T>(T id)
     {
         return _unitOfWork.JobRepository.GetById(id);
     }
